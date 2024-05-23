@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./cssFiles/index.css">
+    <link rel="stylesheet" href="./cssFiles/product.css">
+    <link rel="stylesheet" href="./cssFiles/itemcart.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header-container">
+        <div class="header-contents">
+            <div class="logo">
+              <h2>Iot Bangladesh</h2>
+            </div>
+            <div class="nav-items">
+              <a href="./index.html" class="nav-item">Home</a>
+              <a href="#" class="nav-item">Products</a>
+              <a href="#" class="nav-item">Cart Items</a>
+            </div>
+            <div class="search-bar">
+              <input type="text" placeholder="product name" class="search-box">
+              <button class="search-btn">Search</button>  
+          </div>
+        </div>
+  </header>
+  <main>
+    <div class="item-page-container">
+        <div class="cart-col-1">
+            <div id="all-cart-items" class="all-cart-items">
+              <h2>Items In Your Cart</h2>
+          
+            </div>
+        </div>
+        <div class="cart-col-2">
+            <div class="confirm-order-cart">
+               <div class="products-calculation">
+                <h2>Order Details</h2>
+               <p>Arduino Uno x 1 = 450</p>
+               <h3>Total Price : 450</h3>
+               
+               <form>
+                 <label for="user_name">Name</label>
+                 <input name="user_name" type="text" placeholder="your name" class="order-input" id="customerName" required />
+                 <label for="user_contact">Contact</label>
+                 <input name="user_contact" type="text" placeholder="your conatct" class="order-input" id="customerContact" required />
+                 <label for="user_address">Address</label>
+                 <input name="user_address" type="text" placeholder="your address" class="order-input" id="customerAddress" required />
+                 <input type="button" value="Submit" class="c-c-btn">
+                </form>
+            </div>
+        </div>
+    </div>
+  </main>
+  <script>
+    let itemsStr = localStorage.getItem("cartItems");
+    let items = JSON.parse(itemsStr);
+    console.log(items);
+    let containerDiv = document.getElementById("all-cart-items");
+    if(items){
+      for(let i=0;i<items.length;i++){
+        console.log(items[i])
+        //paren
+        
+        let cardContainerDiv = document.createElement("div");
+        cardContainerDiv.className = "cart-item-card";
+        
+        let infoDiv = document.createElement("div");
+        infoDiv.className="item-card-info";
+        
+        let img = document.createElement("img");
+        img.className = "i-c-img";
+        img.src = items[i].image;
+
+        let textCon = document.createElement("div");
+        textCon.className ="info";
+        
+        let controllerDiv = document.createElement("div");
+        controllerDiv.className = "quantity-controller";
+        
+        let qtyDiv = document.createElement("div");
+        qtyDiv.className = "quantity-price";
+        
+
+        let p = document.createElement("p");
+        let p2 = document.createElement("p");
+        let p3 = document.createElement("p");
+        let p4 = document.createElement("p");
+        let p5 = document.createElement("p");
+        let h3 = document.createElement("h3");
+        let h4 = document.createElement("h4");
+        
+        h3.innerText=items[i].title;
+        p.innerText=items[i].description.substring(0,25)+"..";
+        h4.innerText=items[i].quantity;
+        p2.innerText="-";
+        p3.innerText="+"
+        p4.innerText=items[i].quantity + "*"+items[0].price;
+        p5.innerText="Total Price "+parseInt(items[i].quantity)*parseInt(items[0].price);
+        //info and image
+        textCon.appendChild(h3);
+        textCon.appendChild(p);
+        infoDiv.appendChild(img);
+        infoDiv.appendChild(textCon);
+        
+        //quantity controllers
+        controllerDiv.appendChild(p2);
+        controllerDiv.appendChild(h4);
+        controllerDiv.appendChild(p3);
+        
+        //price div
+        qtyDiv.appendChild(p4);
+        qtyDiv.appendChild(p5);
+        cardContainerDiv.appendChild(infoDiv);
+        cardContainerDiv.appendChild(controllerDiv);
+        cardContainerDiv.appendChild(qtyDiv);
+        span = document.createElement("span");
+        span.innerText = "test"
+        containerDiv.appendChild(cardContainerDiv);
+      }
+    }else{
+      let h11 = document.createElement("h1");
+      h11.innerText="No items in the cart";
+      containerDiv.appendChild(h11);
+    }
+    console.log(items);
+  </script>
+</body>
+</html>
